@@ -1,3 +1,6 @@
+/**
+ *  Clase encargada de las operaciones de la cuenta en la base de datos
+ */
 package uniajc.dao;
 
 // Importaciones necesarias

@@ -4,7 +4,6 @@
 package uniajc.dao;
 
 // Importaciones necesarias
-import uniajc.db.ConexionDatabase;
 import uniajc.modelo.Producto;
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,8 +27,7 @@ public class ProductoDAO {
         boolean registrado = false;
         String sql = "{ CALL RegistrarProducto(?, ?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, producto.getId_stock());
             cs.setString(2, producto.getNombre());
@@ -51,8 +49,7 @@ public class ProductoDAO {
         List<Producto> lista = new ArrayList<>();
         String sql = "{ CALL ListarProductos() }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql);
+        try (CallableStatement cs = conexion.prepareCall(sql);
              ResultSet rs = cs.executeQuery()) {
 
             while (rs.next()) {
@@ -77,8 +74,7 @@ public class ProductoDAO {
         boolean eliminado = false;
         String sql = "{ CALL EliminarProducto(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idProducto);
             cs.execute();
@@ -96,8 +92,7 @@ public class ProductoDAO {
         boolean actualizado = false;
         String sql = "{ CALL ActualizarProducto(?, ?, ?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, producto.getId_producto());
             cs.setInt(2, producto.getId_stock());
@@ -120,8 +115,7 @@ public class ProductoDAO {
         Producto p = null;
         String sql = "{ CALL BuscarProductoPorId(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idProducto);
             try (ResultSet rs = cs.executeQuery()) {

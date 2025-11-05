@@ -1,14 +1,14 @@
-
-
+/**
+ *  Clase encargada de las operaciones del Stock en la base de datos
+ */
 package uniajc.dao;
 
+// Importaciones necesarias
 import java.sql.*;
 import java.util.*;
-
 import javax.swing.JOptionPane;
-
 import uniajc.modelo.Stock;
-import uniajc.db.*;
+
 
 public class StockDAO {
 
@@ -25,8 +25,7 @@ public class StockDAO {
         boolean registrado = false;
         String sql = "{ CALL RegistrarStock(?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, stock.getId_Producto());
             cs.setInt(2, stock.getId_Almacenamiento());
@@ -47,8 +46,7 @@ public class StockDAO {
         boolean actualizado = false;
         String sql = "{ CALL ActualizarStock(?, ?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, stock.getId_Stock());
             cs.setInt(2, stock.getId_Producto());
@@ -70,8 +68,7 @@ public class StockDAO {
         boolean eliminado = false;
         String sql = "{ CALL EliminarStock(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idStock);
             cs.execute();
@@ -89,8 +86,7 @@ public class StockDAO {
         List<Stock> lista = new ArrayList<>();
         String sql = "{ CALL ListarStock() }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql);
+        try (CallableStatement cs = conexion.prepareCall(sql);
              ResultSet rs = cs.executeQuery()) {
 
             while (rs.next()) {
@@ -114,8 +110,7 @@ public class StockDAO {
         Stock s = null;
         String sql = "{ CALL BuscarStockPorId(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-             CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idStock);
             try (ResultSet rs = cs.executeQuery()) {

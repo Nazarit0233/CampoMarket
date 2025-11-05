@@ -1,6 +1,9 @@
+/**
+ *  Clase encargada de las operaciones del pedido en la base de datos
+ */
 package uniajc.dao;
 
-import uniajc.db.ConexionDatabase;
+// Importaciones necesarias
 import uniajc.modelo.Pedido;
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,8 +27,7 @@ public class PedidoDAO {
         boolean registro = false;
         String sql = "{ CALL RegistrarPedido(?, ?, ?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-                CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, pedido.getid_Cliente());
             cs.setInt(2, pedido.getid_Estado_Pedido());
@@ -48,8 +50,7 @@ public class PedidoDAO {
         List<Pedido> lista = new ArrayList<>();
         String sql = "{ CALL ListarPedidos() }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-                CallableStatement cs = con.prepareCall(sql);
+        try (CallableStatement cs = conexion.prepareCall(sql);
                 ResultSet rs = cs.executeQuery()) {
 
             while (rs.next()) {
@@ -76,8 +77,7 @@ public class PedidoDAO {
         boolean eliminado = false;
         String sql = "{ CALL EliminarPedido(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-                CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idPedido);
             cs.execute();
@@ -95,8 +95,7 @@ public class PedidoDAO {
         boolean actualizado = false;
         String sql = "{ CALL ActualizarPedido(?, ?, ?, ?, ?, ?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-                CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, pedido.getid_Pedido());
             cs.setInt(2, pedido.getid_Cliente());
@@ -120,8 +119,7 @@ public class PedidoDAO {
         Pedido p = null;
         String sql = "{ CALL BuscarPedidoPorId(?) }";
 
-        try (Connection con = ConexionDatabase.getConnection();
-                CallableStatement cs = con.prepareCall(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, idPedido);
             try (ResultSet rs = cs.executeQuery()) {
