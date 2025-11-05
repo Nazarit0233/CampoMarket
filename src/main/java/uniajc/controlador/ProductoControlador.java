@@ -6,11 +6,11 @@ import java.sql.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class ControladorProducto {
+public class ProductoControlador {
     private ProductoDAO dao;
 
     // Constructor del controlador que recibe la conexión de la base de datos
-    public ControladorProducto(Connection conexion) {
+    public ProductoControlador(Connection conexion) {
         this.dao = new ProductoDAO(conexion);
     }
 
@@ -25,7 +25,7 @@ public class ControladorProducto {
         }
     }
 
-    //Actualizar
+    // Actualizar
     public void actualizarProducto(int id_stock, String nombre, double precio, int cantidad_disponible) {
         try {
             dao.actualizarProducto(new Producto(id_stock, nombre, precio, cantidad_disponible));
@@ -35,7 +35,7 @@ public class ControladorProducto {
         }
     }
 
-    //Eliminar
+    // Eliminar
     public void eliminarProducto(int id) {
         try {
             dao.eliminarProducto(id);

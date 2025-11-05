@@ -56,7 +56,7 @@ public class PedidoController {
         }
     }
 
-    // Leer
+    // Mostrar
     public List<Pedido> listarPedidos() {
         try {
             return dao.listarPedidos();

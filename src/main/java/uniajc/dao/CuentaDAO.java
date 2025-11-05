@@ -43,6 +43,43 @@ public class CuentaDAO {
         return registrado;
     }
 
+    // Actualizar con prodeciminentos almacenados
+    public boolean actualizarCuenta(Cuenta cuenta) throws SQLException {
+        boolean actualizado = false;
+        String sql = "{ CALL ActualizarCuenta(?, ?, ?, ?, ?, ?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.setInt(1, cuenta.getId_Cuenta());
+            cs.setString(2, cuenta.getRol().getNombre());
+            cs.setString(3, cuenta.getNombre());
+            cs.setString(4, cuenta.getCorreoElectronico());
+            cs.setString(5, cuenta.getContraseña());
+            cs.setString(6, cuenta.getTelefono());
+
+            cs.execute();
+            actualizado = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar cuenta: " + e.getMessage());
+        }
+        return actualizado;
+    }
+
+    // Eliminar con procedimientos almacenados
+    public boolean eliminarCuenta(int id) throws SQLException {
+        boolean eliminado = false;
+        String sql = "{ CALL EliminarCuenta(?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.setInt(1, id);
+
+            cs.execute();
+            eliminado = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar cuenta: " + e.getMessage());
+        }
+        return eliminado;
+    }
+
     // Mostrar con procediminetos almacenados
     public List<Cuenta> listarCuentas() throws SQLException {
         List<Cuenta> lista = new ArrayList<>();
@@ -66,43 +103,6 @@ public class CuentaDAO {
             JOptionPane.showMessageDialog(null, "Error al listar cuentas: " + e.getMessage());
         }
         return lista;
-    }
-
-    // Eliminar con procedimientos almacenados
-    public boolean eliminarCuenta(int id) throws SQLException {
-        boolean eliminado = false;
-        String sql = "{ CALL EliminarCuenta(?) }";
-        try (CallableStatement cs = conexion.prepareCall(sql)) {
-            cs.setInt(1, id);
-
-            cs.execute();
-            eliminado = true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar cuenta: " + e.getMessage());
-        }
-        return eliminado;
-    }
-
-    // Actualizar con prodeciminentos almacenados
-    public boolean actualizarCuenta(Cuenta cuenta) throws SQLException {
-        boolean actualizado = false;
-        String sql = "{ CALL ActualizarCuenta(?, ?, ?, ?, ?, ?) }";
-        try (CallableStatement cs = conexion.prepareCall(sql)) {
-            cs.setInt(1, cuenta.getId_Cuenta());
-            cs.setString(2, cuenta.getRol().getNombre());
-            cs.setString(3, cuenta.getNombre());
-            cs.setString(4, cuenta.getCorreoElectronico());
-            cs.setString(5, cuenta.getContraseña());
-            cs.setString(6, cuenta.getTelefono());
-
-            cs.execute();
-            actualizado = true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar cuenta: " + e.getMessage());
-        }
-        return actualizado;
     }
 
     // Buscar Cuenta
