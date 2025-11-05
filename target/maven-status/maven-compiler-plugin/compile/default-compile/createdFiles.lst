@@ -16,7 +16,6 @@ uniajc\dao\CuentaDAO.class
 uniajc\Roles\RolAdministrador.class
 uniajc\Roles\RolCajero.class
 uniajc\Roles\RolRepartidor.class
-uniajc\vista\VistaPrincipal.class
 uniajc\dao\ProductoDAO.class
 uniajc\Main.class
 uniajc\modelo\Ruta.class
