@@ -4,7 +4,6 @@ package uniajc.controlador;
 import uniajc.modelo.*;
 import uniajc.dao.*;
 import uniajc.db.ConexionDatabase;
-import uniajc.controlador.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
