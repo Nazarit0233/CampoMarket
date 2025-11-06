@@ -17,6 +17,10 @@ public class ProductoDAO {
     // Conexión a la base de datos
     private Connection conexion;
 
+    public ProductoDAO() {
+        
+    }
+
     // Constructor que recibe la conexión
     public ProductoDAO(Connection conexion) {
         this.conexion = conexion;

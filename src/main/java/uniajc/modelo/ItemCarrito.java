@@ -7,13 +7,11 @@ public class ItemCarrito {
     // Atributos
     private Producto producto; // Atributo Producto
     private int cantidad; // Atributo Cantidad
-    private double precioUnitario; // Atributo Precio unitario
 
     // Constructor
-    public ItemCarrito(Producto producto, int cantidad, double precioUnitario) {
+    public ItemCarrito(Producto producto, int cantidad) {
         this.producto = producto;
         this.cantidad = cantidad;
-        this.precioUnitario = precioUnitario;
     }
 
     // Getters y Setters
@@ -31,13 +29,5 @@ public class ItemCarrito {
 
     public double getSubtotal() {
         return producto.getPrecio() * cantidad;
-    }
-
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
     }
 }

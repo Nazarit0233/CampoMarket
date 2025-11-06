@@ -35,38 +35,6 @@ public class Carrito {
         this.fechaCreacion = fechaCreacion;
     }
 
-    // Agregar producto
-    public void agregarProducto(Producto producto, int cantidad) {
-        for (ItemCarrito item : items) {
-            if (item.getProducto().getId_producto() == producto.getId_producto()) {
-                item.setCantidad(item.getCantidad() + cantidad);
-                calcularTotal();
-                return;
-            }
-        }
-        items.add(new ItemCarrito(producto, cantidad, producto.getPrecio()));
-        calcularTotal();
-    }
-
-    // Eliminar producto
-    public void eliminarProducto(int idProducto) {
-        items.removeIf(item -> item.getProducto().getId_producto() == idProducto);
-        calcularTotal();
-    }
-
-    // Calcular total
-    public void calcularTotal() {
-        total = 0;
-        for (ItemCarrito item : items) {
-            total += item.getSubtotal();
-        }
-    }
-
-    // Vaciar carrito
-    public void vaciarCarrito() {
-        items.clear();
-        total = 0;
-    }
 
     // Getters y Setters
     public double getTotal() {

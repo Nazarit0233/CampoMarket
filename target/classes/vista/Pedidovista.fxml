@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="uniajc.controlador.ClienteControlador">
+
+    <top>
+        <Label text="Tienda El Campesino" style="-fx-font-size: 24px; -fx-padding: 10;" />
+    </top>
+
+    <center>
+        <TableView fx:id="tablaProductos" prefWidth="400">
+            <columns>
+                <TableColumn text="Producto" fx:id="colProducto" prefWidth="150"/>
+                <TableColumn text="Precio" fx:id="colPrecio" prefWidth="80"/>
+                <TableColumn text="Agregar" fx:id="colAgregar" prefWidth="80"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <right>
+        <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: gray; -fx-border-width: 1;">
+            <Label text="Carrito" style="-fx-font-size: 18px;" />
+            <TableView fx:id="tablaCarrito" prefWidth="300">
+                <columns>
+                    <TableColumn text="Producto" fx:id="colCarritoProducto" prefWidth="120"/>
+                    <TableColumn text="Cantidad" fx:id="colCarritoCantidad" prefWidth="60"/>
+                    <TableColumn text="Subtotal" fx:id="colCarritoSubtotal" prefWidth="80"/>
+                    <TableColumn text="Acciones" fx:id="colCarritoAcciones" prefWidth="80"/>
+                </columns>
+            </TableView>
+            <Button text="Confirmar Pedido" fx:id="btnConfirmar"/>
+        </VBox>
+    </right>
+
+    <bottom>
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <Button text="Ver Carrito" fx:id="btnVerCarrito"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

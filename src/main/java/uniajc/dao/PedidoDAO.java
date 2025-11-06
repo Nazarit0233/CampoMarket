@@ -3,6 +3,7 @@
  */
 package uniajc.dao;
 
+import uniajc.modelo.ItemCarrito;
 // Importaciones necesarias
 import uniajc.modelo.Pedido;
 import java.sql.*;
@@ -23,26 +24,22 @@ public class PedidoDAO {
 
     // Aquí irían los métodos CRUD para la entidad Pedido
     // Crear con procediminetos almacenados
-    public boolean registrarPedido(Pedido pedido) throws SQLException {
-        boolean registro = false;
-        String sql = "{ CALL RegistrarPedido(?, ?, ?, ?, ?) }";
-
+    public int registrarPedidoYObtenerId(Pedido pedido) throws SQLException {
+        String sql = "{ CALL RegistrarPedido(?, ?, ?, ?, ?, ?) }";
         try (CallableStatement cs = conexion.prepareCall(sql)) {
 
             cs.setInt(1, pedido.getid_Cliente());
             cs.setInt(2, pedido.getid_Estado_Pedido());
-            cs.setDouble(3, pedido.getTotalPedido());
-            cs.setString(4, pedido.getMetodoPago());
-            cs.setString(5, pedido.getDireccionEntrega());
+            cs.setTimestamp(3, pedido.getFechaPedido());
+            cs.setDouble(4, pedido.getTotalPedido());
+            cs.setString(5, pedido.getMetodoPago());
+            cs.setString(6, pedido.getDireccionEntrega());
+            cs.registerOutParameter(6, java.sql.Types.INTEGER); // salida del id generado
 
             cs.execute();
-            registro = true;
+            return cs.getInt(6);
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar pedido: " + e.getMessage());
-        }
-
-        return registro;
+        } 
     }
 
     // Mostrar con procedimientos almacenados
@@ -66,7 +63,7 @@ public class PedidoDAO {
             }
 
         } catch (SQLException e) {
-            System.err.println("Error al listar pedidos: " + e.getMessage());
+           JOptionPane.showMessageDialog(null, "Error al listar pedidos: " + e.getMessage());
         }
 
         return lista;
@@ -141,5 +138,20 @@ public class PedidoDAO {
 
         return p;
     }
+
+    // Registrar detalle pedido
+    public boolean registrarDetallePedido(int idPedido, ItemCarrito item) throws SQLException {
+    String sql = "{ CALL RegistrarDetallePedido(?, ?, ?) }";
+    try (CallableStatement cs = conexion.prepareCall(sql)) {
+        cs.setInt(1, idPedido);
+        cs.setInt(2, item.getProducto().getId_producto());
+        cs.setInt(3, item.getCantidad());
+        cs.execute();
+        return true;
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al registrar detalle del pedido: " + e.getMessage());
+        return false;
+    }
+}
 
 }

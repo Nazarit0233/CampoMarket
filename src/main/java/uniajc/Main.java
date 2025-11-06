@@ -6,17 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception   {
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/Test.fxml"));
-        Scene scene = new Scene(root, 400, 200);
-        stage.setTitle("CampoMarket");
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) throws Exception   {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/vista/Pedidovista.fxml"));
+            Scene scene = new Scene(root, 900, 400);
+            primaryStage.setTitle("CampoMarket - Cliente");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch ( Exception e) {
+            e.printStackTrace();
+        }
     }
+
     public static void main(String[] args) {
         launch();
     }
