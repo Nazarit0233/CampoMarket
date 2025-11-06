@@ -11,9 +11,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception   {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/vista/Pedidovista.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/vista/CreaCuenta.fxml"));
             Scene scene = new Scene(root, 900, 400);
-            primaryStage.setTitle("CampoMarket - Cliente");
+            primaryStage.setTitle("CampoMarket");
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch ( Exception e) {

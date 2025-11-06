@@ -1,8 +1,9 @@
 package uniajc.controlador;
 
 // Importaciones necesarias
-import uniajc.dao.CuentaDAO;
-import uniajc.modelo.Cuenta;
+import uniajc.dao.*;
+import uniajc.modelo.*;
+import javafx.*;
 import javax.swing.*;
 import java.sql.*;
 import java.util.List;
@@ -17,32 +18,43 @@ public class CuentaControlador {
 
     // Métodos para gestionar cuentas
     // Crear
-    public void registrarCuenta(Cuenta cuenta) throws SQLException {
+    public boolean registrarCuenta(Cuenta cuenta) {
         try {
-            dao.registrarCuenta(cuenta);
-            JOptionPane.showMessageDialog(null, "Cuenta registrada exitosamente.");
+            boolean ok = dao.registrarCuenta(cuenta);
+            if (ok) {
+                JOptionPane.showMessageDialog(null, " Cuenta registrada exitosamente.");
+            }
+            return ok;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar la cuenta: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al registrar la cuenta: " + e.getMessage());
+            return false;
         }
     }
-
     // Actualizar
-    public void actualizarCuenta(Cuenta cuenta) throws SQLException {
+    public boolean actualizarCuenta(Cuenta cuenta) {
         try {
-            dao.actualizarCuenta(cuenta);
-            JOptionPane.showInternalMessageDialog(null, "Cuenta actualizado exitosamente.");
+            boolean ok = dao.actualizarCuenta(cuenta);
+            if (ok) {
+                JOptionPane.showMessageDialog(null, " Cuenta actualizada exitosamente.");
+            }
+            return ok;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Error al actualizar la cuenta: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al actualizar la cuenta: " + e.getMessage());
+            return false;
         }
     }
 
     // Eliminar
-    public void eliminarCuenta(int id) throws SQLException {
+    public boolean eliminarCuenta(int id) {
         try {
-            dao.eliminarCuenta(id);
-            JOptionPane.showMessageDialog(null, "Cuenta eliminada exitosamente.");
+            boolean ok = dao.eliminarCuenta(id);
+            if (ok) {
+                JOptionPane.showMessageDialog(null, " Cuenta eliminada exitosamente.");
+            }
+            return ok;
         } catch (SQLException e) {
-            JOptionPane.showInternalMessageDialog(null, "Error al eliminar la cuenta: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al eliminar la cuenta: " + e.getMessage());
+            return false;
         }
     }
 
@@ -57,12 +69,18 @@ public class CuentaControlador {
     }
 
     // Buscar
-    public void buscarPorId(int id) throws SQLException {
+    public Cuenta buscarPorId(int id) {
         try {
-            dao.buscarPorId(id);
-            JOptionPane.showMessageDialog(null, "Cuenta encontrada exitosamente.");
+            Cuenta cuenta = dao.buscarPorId(id);
+            if (cuenta != null) {
+                JOptionPane.showMessageDialog(null, " Cuenta encontrada.");
+            } else {
+                JOptionPane.showMessageDialog(null, " No se encontró la cuenta con ID: " + id);
+            }
+            return cuenta;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al buscar la cuenta: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al buscar la cuenta: " + e.getMessage());
+            return null;
         }
     }
 
