@@ -10,22 +10,40 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 public class ClienteControlador {
 
-    @FXML private TableView<Producto> tablaProductos;
-    @FXML private TableColumn<Producto, String> colProducto;
-    @FXML private TableColumn<Producto, Double> colPrecio;
-    @FXML private TableColumn<Producto, Void> colAgregar;
+    @FXML
+    private TableView<Producto> tablaProductos;
+    @FXML
+    private TableColumn<Producto, String> colProducto;
+    @FXML
+    private TableColumn<Producto, Double> colPrecio;
+    @FXML
+    private TableColumn<Producto, Void> colAgregar;
 
-    @FXML private TableView<ItemCarrito> tablaCarrito;
-    @FXML private TableColumn<ItemCarrito, String> colCarritoProducto;
-    @FXML private TableColumn<ItemCarrito, Integer> colCarritoCantidad;
-    @FXML private TableColumn<ItemCarrito, Double> colCarritoSubtotal;
-    @FXML private TableColumn<ItemCarrito, Void> colCarritoAcciones;
+    @FXML
+    private TableView<ItemCarrito> tablaCarrito;
+    @FXML
+    private TableColumn<ItemCarrito, String> colCarritoProducto;
+    @FXML
+    private TableColumn<ItemCarrito, Integer> colCarritoCantidad;
+    @FXML
+    private TableColumn<ItemCarrito, Double> colCarritoSubtotal;
+    @FXML
+    private TableColumn<ItemCarrito, Void> colCarritoAcciones;
 
-    @FXML private Button btnConfirmar;
+    @FXML
+    private Pane panelCarrito;
+
+    @FXML
+    private Button btnConfirmar;
+    @FXML
+    private Button btnVerCarrito;
+    @FXML
+    private Button btnVolverMenu;
 
     private ObservableList<Producto> productos = FXCollections.observableArrayList();
     private ObservableList<ItemCarrito> carrito = FXCollections.observableArrayList();
@@ -44,7 +62,9 @@ public class ClienteControlador {
             showAlert("Error", "No se pudieron cargar los productos: " + ex.getMessage());
             // opcional: return; // si no quieres continuar la inicialización
         }
-        
+
+        btnVerCarrito.setOnAction(e -> toggleCarrito());
+
 
         // Configurar tabla de productos
         colProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -53,6 +73,8 @@ public class ClienteControlador {
 
         // Agregar botones "Agregar" a productos
         agregarBotonesProductos();
+
+        
 
         // Configurar tabla carrito
         colCarritoProducto.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(
@@ -77,6 +99,16 @@ public class ClienteControlador {
         });
     }
 
+    private void toggleCarrito() {
+        if (panelCarrito.isVisible()) {
+            panelCarrito.setVisible(false);
+            btnVerCarrito.setText("Ver Carrito");
+        } else {
+            panelCarrito.setVisible(true);
+            btnVerCarrito.setText("Ocultar Carrito");
+        }
+        }
+
     private void agregarBotonesProductos() {
         Callback<TableColumn<Producto, Void>, TableCell<Producto, Void>> cellFactory = new Callback<>() {
             @Override
@@ -89,6 +121,7 @@ public class ClienteControlador {
                             agregarAlCarrito(p);
                         });
                     }
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -102,8 +135,8 @@ public class ClienteControlador {
     }
 
     private void agregarAlCarrito(Producto p) {
-        for(ItemCarrito item : carrito) {
-            if(item.getProducto().getId_producto() == p.getId_producto()) {
+        for (ItemCarrito item : carrito) {
+            if (item.getProducto().getId_producto() == p.getId_producto()) {
                 item.setCantidad(item.getCantidad() + 1);
                 tablaCarrito.refresh();
                 return;
@@ -131,7 +164,7 @@ public class ClienteControlador {
 
                         btnDecrement.setOnAction(e -> {
                             ItemCarrito item = getTableView().getItems().get(getIndex());
-                            if(item.getCantidad() > 1) {
+                            if (item.getCantidad() > 1) {
                                 item.setCantidad(item.getCantidad() - 1);
                             } else {
                                 carrito.remove(item);

@@ -26,7 +26,9 @@
     </center>
 
     <right>
-        <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: gray; -fx-border-width: 1;">
+        <VBox fx:id="panelCarrito" spacing="10" 
+            style="-fx-padding: 10; -fx-border-color: gray; -fx-border-width: 1;"
+            visible="false">
             <Label text="Carrito" style="-fx-font-size: 18px;" />
             <TableView fx:id="tablaCarrito" prefWidth="300">
                 <columns>

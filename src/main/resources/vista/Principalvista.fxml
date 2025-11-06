@@ -3,7 +3,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Label?>
 
-<StackPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml">
     <Label text="¡Ventana JavaFX funcionando! 🎉" />
-</StackPane>
+</BorderPane>
+
