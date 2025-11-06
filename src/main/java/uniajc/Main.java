@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception   {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/Test.fxml"));
         Scene scene = new Scene(root, 400, 200);
-        stage.setTitle("Prueba JavaFX");
+        stage.setTitle("CampoMarket");
         stage.setScene(scene);
         stage.show();
     }

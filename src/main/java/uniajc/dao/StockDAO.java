@@ -64,13 +64,13 @@ public class StockDAO {
     }
 
     // Eliminar un registro de stock
-    public boolean eliminarStock(int idStock) throws SQLException {
+    public boolean eliminarStock(int id_Stock) throws SQLException {
         boolean eliminado = false;
         String sql = "{ CALL EliminarStock(?) }";
 
         try (CallableStatement cs = conexion.prepareCall(sql)) {
 
-            cs.setInt(1, idStock);
+            cs.setInt(1, id_Stock);
             cs.execute();
             eliminado = true;
 

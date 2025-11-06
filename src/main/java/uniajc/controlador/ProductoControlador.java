@@ -1,5 +1,6 @@
 package uniajc.controlador;
 
+// Importaciones necesarias
 import uniajc.dao.*;
 import uniajc.modelo.*;
 import java.sql.*;
@@ -50,7 +51,7 @@ public class ProductoControlador {
         try {
             return dao.listarProductos();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al listar productos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, " Error al listar: " + e.getMessage());
             return null;
         }
     }
@@ -61,7 +62,7 @@ public class ProductoControlador {
             dao.buscarPorId(id);
             JOptionPane.showMessageDialog(null, " Producto encontrado exitozamente.");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null," Error al buscar el producto." + e.getMessage());
+            JOptionPane.showMessageDialog(null," Error al buscar: " + e.getMessage());
         }
     }
 }
