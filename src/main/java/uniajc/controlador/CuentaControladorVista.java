@@ -1,0 +1,113 @@
+package uniajc.controlador;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.event.ActionEvent;
+import javafx.util.StringConverter;
+import uniajc.modelo.Cuenta;
+import uniajc.Roles.*;
+import uniajc.dao.*;
+import uniajc.db.*;
+import java.sql.Connection;
+
+public class CuentaControladorVista {
+
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtCorreo;
+    @FXML private PasswordField txtContrasena;
+    @FXML private PasswordField txtConfirmar;
+    @FXML private TextField txtTelefono;
+    @FXML private ComboBox<Rol> cmbRol;
+    @FXML private Label lblMensaje;
+    @FXML private Label lblRolSeleccionado;
+
+    private CuentaControlador cuentaControlador;
+
+   
+
+    // Se inicializa la conexión con la base de datos
+    public CuentaControladorVista() {
+        try {
+            Connection conexion = ConexionDatabase.getConnection();
+            this.cuentaControlador = new CuentaControlador(conexion);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        lblMensaje.setText("");
+        // Poblar combo de roles
+        if (cmbRol != null) {
+            cmbRol.getItems().clear();
+            cmbRol.getItems().addAll(new RolAdministrador(), new RolCajero(), new RolCliente(), new RolRepartidor(), new RolDespachador());
+            cmbRol.setConverter(new StringConverter<Rol>() {
+                @Override
+                public String toString(Rol role) {
+                    return role == null ? "" : role.getNombre();
+                }
+
+                @Override
+                public Rol fromString(String string) {
+                    // Not used
+                    return null;
+                }
+            });
+            // No default selection: user must choose a role explicitly
+        }
+    }
+
+    @FXML
+    private void crearCuenta(ActionEvent event) {
+        String nombre = txtNombre.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        String contrasena = txtContrasena.getText().trim();
+        String confirmar = txtConfirmar.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+
+        if (nombre.isEmpty() || correo.isEmpty() || contrasena.isEmpty() || telefono.isEmpty()) {
+            lblMensaje.setText(" Todos los campos son obligatorios.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        if (!contrasena.equals(confirmar)) {
+            lblMensaje.setText(" Las contraseñas no coinciden.");
+            lblMensaje.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        try {
+            Rol rolSeleccionado = (cmbRol != null && cmbRol.getValue() != null) ? cmbRol.getValue() : null;
+            if (rolSeleccionado == null) {
+                // Fallback to Cliente if user didn't select a role
+                rolSeleccionado = new RolCliente();
+            }
+            Cuenta cuenta = new Cuenta(rolSeleccionado, nombre, correo, contrasena, telefono);
+            boolean ok = cuentaControlador.registrarCuenta(cuenta);
+
+            if (ok) {
+                lblMensaje.setText(" Cuenta creada exitosamente.");
+                lblMensaje.setStyle("-fx-text-fill: green;");
+                if (lblRolSeleccionado != null) lblRolSeleccionado.setText("Rol asignado: " + rolSeleccionado.getNombre());
+                limpiarCampos();
+            } else {
+                lblMensaje.setText(" No se pudo crear la cuenta.");
+                lblMensaje.setStyle("-fx-text-fill: red;");
+            }
+        } catch (Exception e) {
+            lblMensaje.setText(" Error: " + e.getMessage());
+            lblMensaje.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtCorreo.clear();
+        txtContrasena.clear();
+        txtConfirmar.clear();
+        
+        txtTelefono.clear();
+    }
+}

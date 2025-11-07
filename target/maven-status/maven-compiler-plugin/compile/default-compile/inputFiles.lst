@@ -1,6 +1,10 @@
+C:\CampoMarket\src\main\java\uniajc\controlador\CarritoControlador.java
+C:\CampoMarket\src\main\java\uniajc\controlador\ClienteControlador.java
 C:\CampoMarket\src\main\java\uniajc\controlador\CuentaControlador.java
-C:\CampoMarket\src\main\java\uniajc\controlador\PedidoController.java
+C:\CampoMarket\src\main\java\uniajc\controlador\CuentaControladorVista.java
+C:\CampoMarket\src\main\java\uniajc\controlador\PedidoControlador.java
 C:\CampoMarket\src\main\java\uniajc\controlador\ProductoControlador.java
+C:\CampoMarket\src\main\java\uniajc\controlador\StockControlador.java
 C:\CampoMarket\src\main\java\uniajc\dao\CuentaDAO.java
 C:\CampoMarket\src\main\java\uniajc\dao\PedidoDAO.java
 C:\CampoMarket\src\main\java\uniajc\dao\ProductoDAO.java

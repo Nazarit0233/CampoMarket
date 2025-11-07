@@ -3,7 +3,15 @@ package uniajc.controlador;
 // Importaciones necesarias
 import uniajc.dao.*;
 import uniajc.modelo.*;
-import javafx.*;
+import uniajc.db.ConexionDatabase;
+import uniajc.Roles.Rol;
+import uniajc.Roles.RolCliente;
+import uniajc.Roles.RolAdministrador;
+import uniajc.Roles.RolCajero;
+import uniajc.Roles.RolDespachador;
+import uniajc.Roles.RolRepartidor;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javax.swing.*;
 import java.sql.*;
 import java.util.List;
@@ -11,7 +19,24 @@ import java.util.List;
 public class CuentaControlador {
     private CuentaDAO dao;
 
-    // Constructor del controlador que recibe la conexión a la base de datos
+    @FXML private TextField txtNombre;
+    @FXML private TextField txtCorreo;
+    @FXML private PasswordField txtContrasena;
+    @FXML private PasswordField txtConfirmar;
+    @FXML private TextField txtDireccion;
+    @FXML private TextField txtTelefono;
+    @FXML private ComboBox<String> cmbRol;
+    @FXML private Button btnCrearCuenta;
+    @FXML private Label lblMensaje;
+
+    // Constructor por defecto requerido por FXMLLoader
+    public CuentaControlador() {
+        // No inicializamos la DAO aquí porque la llamada a la BD debe hacerse
+        // en tiempo de ejecución (initialize) para que FXMLLoader pueda crear
+        // la instancia sin parámetros.
+    }
+
+    // Constructor alternativo que recibe una conexión (puede usarse fuera de FXML)
     public CuentaControlador(Connection conexion) {
         this.dao = new CuentaDAO(conexion);
     }
@@ -83,7 +108,82 @@ public class CuentaControlador {
             return null;
         }
     }
-
     
+    @FXML
+    public void initialize() {
+        // Inicializar la conexión y la DAO cuando el FXML haya sido cargado
+        try {
+            Connection conexion = ConexionDatabase.getConnection();
+            if (conexion == null) {
+                if (lblMensaje != null) lblMensaje.setText("Error de conexión a la base de datos.");
+                if (btnCrearCuenta != null) btnCrearCuenta.setDisable(true);
+                return;
+            }
+            this.dao = new CuentaDAO(conexion);
+        } catch (Exception e) {
+            // Mostrar mensaje y deshabilitar el botón si hay problema
+            if (lblMensaje != null) lblMensaje.setText("Error al inicializar BD: " + e.getMessage());
+            if (btnCrearCuenta != null) btnCrearCuenta.setDisable(true);
+        }
+
+        // Poblar ComboBox de roles
+        if (cmbRol != null) {
+            cmbRol.getItems().clear();
+            cmbRol.getItems().addAll("Administrador", "Cajero", "Cliente", "Repartidor", "Despachador");
+            cmbRol.setValue("Cliente");
+        }
+
+        // Configurar acción del botón crear (si está presente en el FXML)
+        if (btnCrearCuenta != null) {
+            btnCrearCuenta.setOnAction(ev -> {
+                try {
+                    String nombre = txtNombre.getText();
+                    String correo = txtCorreo.getText();
+                    String contrasena = txtContrasena.getText();
+                    String confirmar = txtConfirmar.getText();
+                    String telefono = txtTelefono.getText();
+
+                    if (!contrasena.equals(confirmar)) {
+                        if (lblMensaje != null) lblMensaje.setText("Las contraseñas no coinciden.");
+                        return;
+                    }
+
+                    String rolNombre = (cmbRol != null) ? cmbRol.getValue() : "Cliente";
+                    Rol rol = mapRol(rolNombre);
+                    Cuenta cuenta = new Cuenta(rol, nombre, correo, contrasena, telefono);
+                    boolean creado = registrarCuenta(cuenta);
+                    if (creado) {
+                        if (lblMensaje != null) lblMensaje.setText("Cuenta creada correctamente.");
+                    } else {
+                        if (lblMensaje != null) lblMensaje.setText("No se pudo crear la cuenta.");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    if (lblMensaje != null) lblMensaje.setText("Error: " + ex.getMessage());
+                }
+            });
+        }
+    }
+
+    /**
+     * Mapear el nombre del rol a una instancia de Rol concreta.
+     */
+    private Rol mapRol(String nombreRol) {
+        if (nombreRol == null) return new RolCliente();
+        switch (nombreRol) {
+            case "Administrador":
+                return new RolAdministrador();
+            case "Cajero":
+                return new RolCajero();
+            case "Cliente":
+                return new RolCliente();
+            case "Repartidor":
+                return new RolRepartidor();
+            case "Despachador":
+                return new RolDespachador();
+            default:
+                return new RolCliente();
+        }
+    }
 
 }
