@@ -16,11 +16,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 public class LoginControladorVista {
 
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtContrasena;
     @FXML private Label lblMensaje;
+    @FXML private Hyperlink linkCrearCuenta;
 
     private CuentaDAO cuentaDAO;
 
@@ -30,6 +33,23 @@ public class LoginControladorVista {
             cuentaDAO = new CuentaDAO(conexion);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void abrirCrearCuenta(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uniajc/vistas/VistaCrearCuenta.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException e) {
+            
+            JOptionPane.showMessageDialog(null,"Error al cargar la vista de Crear Cuenta." + e.getMessage());
         }
     }
 
@@ -44,7 +64,7 @@ public class LoginControladorVista {
             return;
         }
 
-        Cuenta cuenta = cuentaDAO.obtenerCuentaPorCorreoYContrasena(correo, contrasena);
+        Cuenta cuenta = cuentaDAO.loginCuenta(correo, contrasena);
 
         if (cuenta != null) {
             lblMensaje.setText("Inicio de sesión exitoso");
