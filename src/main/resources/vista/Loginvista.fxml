@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -32,7 +33,7 @@
       </Label>
       <VBox alignment="CENTER" fillWidth="false" layoutX="26.0" layoutY="275.0" prefWidth="350.0" spacing="30.0" style="-fx-background-color: #f4dfc6; -fx-border-radius: 10px; -fx-border-width: 2; -fx-background-radius: 10px; -fx-padding: 20;">
          <children>
-            <TextField editable="false" prefWidth="300.0" promptText="Nombre" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
+            <TextField fx:id="txtCorreo" editable="false" prefWidth="300.0" promptText="Correo" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
                <font>
                   <Font name="SansSerif Bold" size="12.0" />
                </font>
@@ -43,7 +44,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <PasswordField editable="false" prefWidth="300.0" promptText="Contraseña" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
+            <PasswordField fx:id="txtContraseña" editable="false" prefWidth="300.0" promptText="Contraseña" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
                <font>
                   <Font name="SansSerif Bold" size="12.0" />
                </font>
@@ -51,7 +52,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </PasswordField>
-            <Button id="btnLogin" alignment="CENTER" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: #af452b; -fx-font-size: 16px;" text="INICIAR SESIÓN" textAlignment="CENTER" textFill="WHITE">
+            <Button id="btnLogin" fx:id="btnIniciarSesion" alignment="CENTER" contentDisplay="CENTER" layoutY="100.0" mnemonicParsing="false" onAction="#iniciarSesion" prefHeight="40.0" prefWidth="270.0" style="-fx-background-color: #af452b; -fx-font-size: 16px;" text="INICIAR SESIÓN" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="13.0" />
                </font>
@@ -59,11 +60,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Hyperlink text="¿No tienes una cuenta?">
-               <font>
-                  <Font name="SansSerif Regular" size="12.0" />
-               </font>
-            </Hyperlink>
+            <HBox prefHeight="21.0" prefWidth="139.0">
+               <children>
+                  <Hyperlink fx:id="linkCrearCuenta" alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="137.0" text="¿No tienes una cuenta?">
+                     <font>
+                        <Font name="SansSerif Regular" size="12.0" />
+                     </font>
+                  </Hyperlink>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

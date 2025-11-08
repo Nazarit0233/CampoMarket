@@ -15,6 +15,12 @@ public class Cuenta {
     private String correoElectronico; // Atributo Correo electrónico
     private String contraseña; // Atributo Contraseña
     private String telefono; // Atributo Teléfono
+    // Datos específicos opcionales por rol
+    private String comprobanteIdentidad; 
+    private String fechaNacimiento;
+    private String areaResponsable; 
+    private String tipoVehiculo;
+    private String turnoTrabajo;
 
     // Constructor vacío
     public Cuenta() {
@@ -105,5 +111,45 @@ public class Cuenta {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getComprobanteIdentidad() {
+        return comprobanteIdentidad;
+    }
+
+    public void setComprobanteIdentidad(String comprobanteIdentidad) {
+        this.comprobanteIdentidad = comprobanteIdentidad;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getAreaResponsable() {
+        return areaResponsable;
+    }
+
+    public void setAreaResponsable(String areaResponsable) {
+        this.areaResponsable = areaResponsable;
+    }
+
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
+    }
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
+    }
+
+    public String getTurnoTrabajo() {
+        return turnoTrabajo;
+    }
+
+    public void setTurnoTrabajo(String turnoTrabajo) {
+        this.turnoTrabajo = turnoTrabajo;
     }
 }

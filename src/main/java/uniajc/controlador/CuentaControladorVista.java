@@ -2,11 +2,11 @@ package uniajc.controlador;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.util.StringConverter;
 import uniajc.modelo.Cuenta;
 import uniajc.Roles.*;
-import uniajc.dao.*;
 import uniajc.db.*;
 import java.sql.Connection;
 
@@ -20,6 +20,14 @@ public class CuentaControladorVista {
     @FXML private ComboBox<Rol> cmbRol;
     @FXML private Label lblMensaje;
     @FXML private Label lblRolSeleccionado;
+    @FXML private VBox boxCamposRol;
+
+    // Campos específicos (creados dinámicamente)
+    private TextField txtComprobante;
+    private TextField txtFechaNacimiento;
+    private TextField txtAreaResponsable;
+    private TextField txtTipoVehiculo;
+    private TextField txtTurnoTrabajo;
 
     private CuentaControlador cuentaControlador;
 
@@ -56,7 +64,45 @@ public class CuentaControladorVista {
             });
             // No default selection: user must choose a role explicitly
         }
+        cmbRol.setOnAction(e -> mostrarCamposPorRol());
     }
+
+    private void mostrarCamposPorRol() {
+    boxCamposRol.getChildren().clear();
+    Rol rol = cmbRol.getValue();
+    if (rol == null) return;
+
+    switch (rol.getNombre()) {
+        case "Cliente":
+            txtComprobante = new TextField();
+            txtComprobante.setPromptText("Comprobante de identidad");
+            txtFechaNacimiento = new TextField();
+            txtFechaNacimiento.setPromptText("Fecha de nacimiento");
+            boxCamposRol.getChildren().addAll(txtComprobante, txtFechaNacimiento);
+            break;
+
+        case "Administrador":
+            txtAreaResponsable = new TextField();
+            txtAreaResponsable.setPromptText("Área responsable");
+            boxCamposRol.getChildren().add(txtAreaResponsable);
+            break;
+
+        case "Repartidor":
+            txtTipoVehiculo = new TextField();
+            txtTipoVehiculo.setPromptText("Tipo de vehículo");
+            txtTurnoTrabajo = new TextField();
+            txtTurnoTrabajo.setPromptText("Turno de trabajo");
+            boxCamposRol.getChildren().addAll(txtTipoVehiculo, txtTurnoTrabajo);
+            break;
+
+        case "Cajero":
+        case "Despachador":
+            txtTurnoTrabajo = new TextField();
+            txtTurnoTrabajo.setPromptText("Turno de trabajo");
+            boxCamposRol.getChildren().add(txtTurnoTrabajo);
+            break;
+    }
+}
 
     @FXML
     private void crearCuenta(ActionEvent event) {
@@ -81,10 +127,32 @@ public class CuentaControladorVista {
         try {
             Rol rolSeleccionado = (cmbRol != null && cmbRol.getValue() != null) ? cmbRol.getValue() : null;
             if (rolSeleccionado == null) {
-                // Fallback to Cliente if user didn't select a role
-                rolSeleccionado = new RolCliente();
+                lblMensaje.setText("Seleccione un rol.");
+                lblMensaje.setStyle("-fx-text-fill: red;");
+                return;
             }
             Cuenta cuenta = new Cuenta(rolSeleccionado, nombre, correo, contrasena, telefono);
+            
+            // Campos específicos según rol
+        switch (rolSeleccionado.getNombre()) {
+            case "Cliente":
+                cuenta.setComprobanteIdentidad(txtComprobante.getText());
+                cuenta.setFechaNacimiento(txtFechaNacimiento.getText());
+                break;
+            case "Administrador":
+                cuenta.setAreaResponsable(txtAreaResponsable.getText());
+                break;
+            case "Repartidor":
+                cuenta.setTipoVehiculo(txtTipoVehiculo.getText());
+                cuenta.setTurnoTrabajo(txtTurnoTrabajo.getText());
+                break;
+            case "Cajero":
+            case "Despachador":
+                cuenta.setTurnoTrabajo(txtTurnoTrabajo.getText());
+                break;
+        }
+
+
             boolean ok = cuentaControlador.registrarCuenta(cuenta);
 
             if (ok) {
