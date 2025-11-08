@@ -23,7 +23,7 @@ public class LoginControladorVista {
     @FXML private TextField txtCorreo;
     @FXML private PasswordField txtContrasena;
     @FXML private Label lblMensaje;
-    @FXML private Hyperlink linkCrearCuenta;
+    @FXML public Hyperlink linkCrearCuenta;
 
     private CuentaDAO cuentaDAO;
 
@@ -39,7 +39,7 @@ public class LoginControladorVista {
     @FXML
     private void abrirCrearCuenta(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uniajc/vistas/VistaCrearCuenta.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaCrearCuenta.fxml"));
             Scene scene = new Scene(loader.load());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -48,7 +48,7 @@ public class LoginControladorVista {
             stage.show();
 
         } catch (IOException e) {
-            
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null,"Error al cargar la vista de Crear Cuenta." + e.getMessage());
         }
     }

@@ -39,14 +39,14 @@ public class CuentaControladorVista {
     @FXML
     private VBox boxCamposRol;
     @FXML
-    private Hyperlink linkIniciarSesion;
+    public Hyperlink linkIniciarSesion;
 
     // Campos específicos (creados dinámicamente)
-    private TextField txtComprobante;
-    private TextField txtFechaNacimiento;
-    private TextField txtAreaResponsable;
-    private TextField txtTipoVehiculo;
-    private TextField txtTurnoTrabajo;
+    @FXML private TextField txtComprobante;
+    @FXML private TextField txtFechaNacimiento;
+    @FXML private TextField txtAreaResponsable;
+    @FXML private TextField txtTipoVehiculo;
+    @FXML private TextField txtTurnoTrabajo;
 
     private CuentaControlador cuentaControlador;
 
@@ -63,7 +63,7 @@ public class CuentaControladorVista {
     @FXML
     private void abrirLogin(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uniajc/vistas/VistaLogin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaLogin.fxml"));
             Scene scene = new Scene(loader.load());
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -72,7 +72,7 @@ public class CuentaControladorVista {
             stage.show();
 
         } catch (IOException e) {
-
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al cargar la vista de login." + e.getMessage());
         }
     }
@@ -87,8 +87,8 @@ public class CuentaControladorVista {
                     new RolDespachador());
             cmbRol.setConverter(new StringConverter<Rol>() {
                 @Override
-                public String toString(Rol role) {
-                    return role == null ? "" : role.getNombre();
+                public String toString(Rol rol) {
+                    return rol == null ? "" : rol.getNombre();
                 }
 
                 @Override
@@ -99,9 +99,9 @@ public class CuentaControladorVista {
             });
             // No default selection: user must choose a role explicitly
         }
-        cmbRol.setOnAction(e -> mostrarCamposPorRol());
     }
 
+    @FXML
     private void mostrarCamposPorRol() {
         boxCamposRol.getChildren().clear();
         Rol rol = cmbRol.getValue();
@@ -132,6 +132,10 @@ public class CuentaControladorVista {
                 break;
 
             case "Cajero":
+                txtTurnoTrabajo = new TextField();
+                txtTurnoTrabajo.setPromptText("Turno de trabajo");
+                boxCamposRol.getChildren().addAll(txtTurnoTrabajo);
+                break;
             case "Despachador":
                 txtTurnoTrabajo = new TextField();
                 txtTurnoTrabajo.setPromptText("Turno de trabajo");
