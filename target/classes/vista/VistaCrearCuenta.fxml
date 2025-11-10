@@ -8,93 +8,92 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="400.0" style="-fx-background-color: #fff7e4;"
-   xmlns="http://javafx.com/javafx/25"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="uniajc.controlador.CuentaControladorVista">
-   <children>
-      <Label layoutX="111.0" layoutY="14.0" lineSpacing="2.0" text="Crear Cuenta" textAlignment="CENTER" textFill="#b1452d">
-         <font>
-            <Font name="Sitka Display Bold" size="32.0" />
-         </font>
-      </Label>
-      <VBox alignment="CENTER" fillWidth="false" layoutX="25.0" layoutY="56.0" prefHeight="350.0" prefWidth="350.0" spacing="15.0" style="-fx-background-color: #f4dfc6; -fx-border-radius: 10;">
-         <children>
-            <ComboBox fx:id="cmbRol" prefWidth="300.0" promptText="Seleccionar rol" style="-fx-background-color: b1452d;">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ComboBox>
-            <TextField fx:id="txtNombre" prefWidth="300.0" promptText="Nombre completo" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
-               <font>
-                  <Font name="SansSerif Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </TextField>
-            <TextField fx:id="txtCorreo" prefWidth="300.0" promptText="Correo electrónico" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
-               <font>
-                  <Font name="SansSerif Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </TextField>
-            <PasswordField fx:id="txtContrasena" prefWidth="300.0" promptText="Contraseña" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
-               <font>
-                  <Font name="SansSerif Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </PasswordField>
-            <PasswordField fx:id="txtConfirmar" prefWidth="300.0" promptText="Confirmar contraseña" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
-               <font>
-                  <Font name="SansSerif Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </PasswordField>
-            <TextField fx:id="txtTelefono" prefWidth="300.0" promptText="Teléfono" style="-fx-background-insets: 3; -fx-border-radius: 10px;">
-               <font>
-                  <Font name="SansSerif Bold" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="TEXT" />
-               </cursor>
-            </TextField>
-            <Button fx:id="btnCrearCuenta" contentDisplay="CENTER" onAction="#crearCuenta" prefHeight="40.0" prefWidth="270.0" style="-fx-font-size: 16px; -fx-background-color: b1452d;" text="CREAR" textAlignment="CENTER" textFill="WHITE">
-               <VBox.margin>
-                  <Insets top="35.0" />
-               </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="SansSerif Regular" size="12.0" />
-               </font>
-            </Button>
-            <Label fx:id="lblMensaje" contentDisplay="CENTER" prefHeight="17.0" prefWidth="240.0" style="-fx-font-size: 12px;" textAlignment="CENTER" textFill="red" />
-            <Label fx:id="lblRolSeleccionado" contentDisplay="CENTER" prefHeight="17.0" prefWidth="240.0" style="-fx-font-size: 12px;" textAlignment="CENTER" textFill="#2b6b2b" />
-            <HBox alignment="CENTER" style="-fx-padding: 10;">
-               <children>
-                  <Hyperlink fx:id="linkIniciarSesion" alignment="CENTER" text="¿Ya tienes cuenta? Inicia sesión" textAlignment="CENTER" onAction="#abrirLogin">
-                     <font>
-                        <Font name="SansSerif Regular" size="12.0" />
-                     </font>
-                  </Hyperlink>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="15.0" top="45.0" />
-         </padding>
-      </VBox>
-   </children>
-</AnchorPane>
+<VBox alignment="CENTER" prefHeight="550.0" prefWidth="350.0" spacing="15" style="-fx-background-color: #fff7e4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uniajc.controlador.CuentaControladorVista">
+
+    <Label style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Registrar Cuenta" textAlignment="CENTER" textFill="#b1452d">
+      <font>
+         <Font name="SansSerif Regular" size="12.0" />
+      </font></Label>
+
+    <!-- Selección de rol -->
+    <ComboBox fx:id="cmbRol" onAction="#mostrarCamposPorRol" prefWidth="250" promptText="Seleccione su rol" style="-fx-background-color: b1452d;">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect></ComboBox>
+
+    <!-- Campos comunes -->
+    <TextField fx:id="txtNombre" prefWidth="250.0" promptText="Nombre completo">
+      <VBox.margin>
+         <Insets left="50.0" right="50.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="TEXT" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect></TextField>
+    <TextField fx:id="txtCorreo" prefWidth="250.0" promptText="Correo electrónico">
+      <VBox.margin>
+         <Insets left="50.0" right="50.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="TEXT" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect></TextField>
+    <PasswordField fx:id="txtContrasena" prefWidth="250.0" promptText="Contraseña">
+      <VBox.margin>
+         <Insets left="50.0" right="50.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="TEXT" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect></PasswordField>
+   <PasswordField fx:id="txtConfirmar" layoutX="50.0" layoutY="177.0" prefWidth="250.0" promptText="Confirmar contraseña">
+      <VBox.margin>
+         <Insets left="50.0" right="50.0" />
+      </VBox.margin>
+      <cursor>
+         <Cursor fx:constant="TEXT" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect></PasswordField>
+
+    <!-- Contenedor dinámico para campos del rol -->
+    <VBox fx:id="boxCamposRol" alignment="CENTER" spacing="10">
+        <!-- Aquí se añadirán los campos dinámicos según el rol -->
+    </VBox>
+
+    <!-- Botón para crear la cuenta -->
+    <Button fx:id="btnCrearCuenta" contentDisplay="CENTER" defaultButton="true" onAction="#crearCuenta" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: b1452d; -fx-text-fill: white;" text="Crear" textAlignment="CENTER" textFill="WHITE">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <effect>
+         <Glow />
+      </effect>
+      <font>
+         <Font name="SansSerif Regular" size="13.0" />
+      </font></Button>
+
+    <Label fx:id="lblMensaje" textFill="red" wrapText="true" />
+
+                <!-- Enlace para ir al Login -->
+    <Hyperlink alignment="CENTER" contentDisplay="CENTER" onAction="#abrirLogin" style="-fx-text-fill: #0066cc; -fx-font-size: 13px;" text="¿Ya tienes cuenta? Inicia sesión">
+      <effect>
+         <Glow level="0.14" />
+      </effect>
+   </Hyperlink>
+
+</VBox>

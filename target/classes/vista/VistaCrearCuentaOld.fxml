@@ -68,7 +68,7 @@
                   <Insets bottom="10.0" left="25.0" top="10.0" />
                </VBox.margin>
             </ComboBox>
-            <VBox fx:id="contenedorCamposPorRol" alignment="CENTER" prefHeight="0.0" prefWidth="305.0" spacing="10">
+               <VBox fx:id="boxCamposRol" alignment="CENTER" prefHeight="0.0" prefWidth="305.0" spacing="10">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>

@@ -13,6 +13,7 @@ uniajc\Roles\RolCliente.class
 uniajc\controlador\PedidoControlador.class
 uniajc\modelo\Carrito.class
 uniajc\controlador\ProductoControlador.class
+uniajc\controlador\LoginControladorVista.class
 uniajc\db\ConexionDatabase.class
 uniajc\Roles\RolDespachador.class
 uniajc\modelo\Producto.class

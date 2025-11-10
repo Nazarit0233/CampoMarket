@@ -103,10 +103,10 @@ public class CuentaControladorVista {
 
     @FXML
     private void mostrarCamposPorRol() {
-        boxCamposRol.getChildren().clear();
-        Rol rol = cmbRol.getValue();
-        if (rol == null)
-            return;
+    if (boxCamposRol == null) return;
+    boxCamposRol.getChildren().clear();
+    Rol rol = cmbRol.getValue();
+    if (rol == null) return;
 
         switch (rol.getNombre()) {
             case "Cliente":
@@ -218,5 +218,7 @@ public class CuentaControladorVista {
         txtConfirmar.clear();
 
         txtTelefono.clear();
+        if (boxCamposRol != null) boxCamposRol.getChildren().clear();
+        if (cmbRol != null) cmbRol.getSelectionModel().clearSelection();
     }
 }

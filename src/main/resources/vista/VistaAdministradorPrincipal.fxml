@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane style="-fx-background-color: #fff7e4;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="uniajc.controladores.AdministradorController">
+
+    <!-- MENÚ LATERAL -->
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #fff7e4; -fx-padding: 15;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Menú">
+            <font>
+               <Font name="SansSerif Regular" size="13.0" />
+            </font></Label>
+            <Separator />
+         <Button fx:id="btnInicio" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#mostrarInicio" style="-fx-background-color: #fef1de; -fx-border-color: #b1452d; -fx-border-radius: 10;" text="Inicio">
+            <font>
+               <Font name="SansSerif Bold" size="14.0" />
+            </font>
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../imagenes/Icono%20Casita.png" />
+                  </image>
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button fx:id="btnUsuarios" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#abrirUsuarios" prefHeight="30.0" style="-fx-background-color: #fef1de; -fx-border-color: #b1452d; -fx-border-radius: 10;" text="Usuarios">
+            <font>
+               <Font name="SansSerif Bold" size="14.0" />
+            </font>
+            <graphic>
+               <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../imagenes/Icono%20Cuentas.png" />
+                  </image>
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button fx:id="btnProductos" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#abrirProductos" style="-fx-background-color: #fef1de; -fx-border-color: #b1452d; -fx-border-radius: 10;" text="Productos">
+            <font>
+               <Font name="SansSerif Bold" size="14.0" />
+            </font>
+            <graphic>
+               <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../imagenes/Icono%20Productos.png" />
+                  </image>
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button fx:id="btnPedidos" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#abrirPedidos" style="-fx-background-color: #fef1de; -fx-border-color: #b1452d; -fx-border-radius: 10;" text="Pedidos">
+            <font>
+               <Font name="SansSerif Bold" size="14.0" />
+            </font>
+            <graphic>
+               <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../imagenes/Icono%20Listas.png" />
+                  </image>
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </ImageView>
+            </graphic>
+         </Button>
+         <Button contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #fef1de; -fx-border-color: #b1452d; -fx-border-radius: 10;" text="Rutas">
+            <font>
+               <Font name="SansSerif Bold" size="14.0" />
+            </font>
+            <graphic>
+               <ImageView fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../imagenes/Icono%20Ruta.png" />
+                  </image>
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </ImageView>
+            </graphic>
+         </Button>
+        </VBox>
+    </left>
+   <top>
+      <HBox alignment="CENTER" style="-fx-border-color: #b1452d; -fx-background-color: #fff7e4; -fx-border-width: 5;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="59.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/GALLINA.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="150.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label alignment="CENTER" text="Carnes y Pollos El Campesino" textAlignment="CENTER">
+               <font>
+                  <Font name="SansSerif Bold" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+            </Label>
+               <Label fx:id="lblNombreAdmin" style="-fx-text-fill: white; -fx-font-size: 14px;" textFill="WHITE">
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </Label>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="35.0" prefWidth="111.0" style="-fx-background-color: b1452d; -fx-border-radius: 10;" text="Cerrar Sesión" textAlignment="CENTER" textFill="WHITE">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="SansSerif Regular" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+         <VBox alignment="CENTER" fillWidth="false" prefHeight="144.0" prefWidth="776.0" spacing="20" style="-fx-padding: 30;" BorderPane.alignment="CENTER">
+             <Label text="Resumen General">
+            <font>
+               <Font name="SansSerif Bold" size="21.0" />
+            </font>
+         </Label>
+
+             <HBox alignment="CENTER" fillHeight="false" spacing="20">
+                 <!-- Tarjeta 1 -->
+                 <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="65.0" prefWidth="200.0" style="-fx-border-color: #b1452d; -fx-border-radius: 10;">
+                     <Label style="-fx-font-size: 14px;" text="Pedidos de hoy" />
+                     <Label fx:id="lblPedidosHoy" alignment="CENTER" text="----" textAlignment="CENTER">
+                  <font>
+                     <Font name="SansSerif Bold" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="10.0" top="5.0" />
+                  </VBox.margin>
+               </Label>
+                 </VBox>
+
+                 <!-- Tarjeta 2 -->
+                 <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="65.0" prefWidth="200.0" style="-fx-border-color: #b1452d; -fx-border-radius: 10;">
+                     <Label style="-fx-font-size: 14px;" text="Ventas del día" />
+                     <Label fx:id="lblVentasDia" alignment="CENTER" text="----" textAlignment="CENTER">
+                  <font>
+                     <Font name="SansSerif Bold" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="10.0" top="5.0" />
+                  </VBox.margin>
+               </Label>
+                 </VBox>
+
+                 <!-- Tarjeta 3 -->
+                 <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="65.0" prefWidth="200.0" style="-fx-border-color: #b1452d; -fx-border-radius: 10;">
+                     <Label style="-fx-font-size: 14px;" text="Repartidores activos" />
+                     <Label fx:id="lblRepartidoresActivos" alignment="CENTER" text="----" textAlignment="CENTER">
+                  <font>
+                     <Font name="SansSerif Bold" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="10.0" top="5.0" />
+                  </VBox.margin>
+               </Label>
+                 </VBox>
+
+                 <!-- Tarjeta 4 -->
+                 <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="65.0" prefWidth="200.0" style="-fx-border-color: #b1452d; -fx-border-radius: 10;">
+                     <Label style="-fx-font-size: 14px;" text="Producto más vendido" />
+                     <Label fx:id="lblProductoMasVendido" alignment="CENTER" text="----" textAlignment="CENTER">
+                  <font>
+                     <Font name="SansSerif Bold" size="15.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="10.0" top="5.0" />
+                  </VBox.margin>
+               </Label>
+                 </VBox>
+             </HBox>
+         </VBox>
+   </bottom>
+
+</BorderPane>
