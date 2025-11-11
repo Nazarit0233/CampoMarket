@@ -27,7 +27,7 @@ public class CuentaDAO {
     // Crear con procedimientos almacenados
     public boolean registrarCuenta(Cuenta cuenta) throws SQLException {
         boolean registrado = false;
-        String sql = "{ CALL CrearCuenta(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
+        String sql = "{ CALL CrearCuenta(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
         try (CallableStatement cs = conexion.prepareCall(sql)) {
             cs.setString(1, cuenta.getNombre());
             cs.setString(2, cuenta.getCorreo_Electronico());
@@ -52,7 +52,6 @@ public class CuentaDAO {
                     cs.setNull(13, Types.VARCHAR);
                     cs.setNull(14, Types.VARCHAR);
                     cs.setNull(15, Types.VARCHAR);
-                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Administrador":
@@ -66,7 +65,6 @@ public class CuentaDAO {
                     cs.setNull(13, Types.VARCHAR);
                     cs.setNull(14, Types.VARCHAR);
                     cs.setNull(15, Types.VARCHAR);
-                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Repartidor":
@@ -80,7 +78,6 @@ public class CuentaDAO {
                     cs.setString(13, cuenta.getPlaca_Vehiculo());
                     cs.setNull(14, Types.VARCHAR);
                     cs.setNull(15, Types.VARCHAR);
-                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Cajero":
@@ -94,7 +91,6 @@ public class CuentaDAO {
                     cs.setString(13, cuenta.getTurno_Trabajo());
                     cs.setInt(14, cuenta.getCaja_Asignada());
                     cs.setString(15, cuenta.getForma_Pago());
-                    cs.setDouble(16, cuenta.getTotal_Recaudado());
                     break;
 
                 case "Despachador":
@@ -108,7 +104,6 @@ public class CuentaDAO {
                     cs.setNull(13, Types.VARCHAR);
                     cs.setNull(14, Types.VARCHAR);
                     cs.setNull(15, Types.VARCHAR);
-                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 default:

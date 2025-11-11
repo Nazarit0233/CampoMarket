@@ -5,10 +5,10 @@ import uniajc.dao.*;
 import uniajc.modelo.*;
 import java.sql.*;
 import java.util.List;
-import javax.swing.JOptionPane;
+import javafx.scene.control.Alert;
 
 public class ProductoControlador {
-    private ProductoDAO dao;
+    private final ProductoDAO dao;
 
     // Constructor del controlador que recibe la conexión de la base de datos
     public ProductoControlador(Connection conexion) {
@@ -17,22 +17,27 @@ public class ProductoControlador {
 
     // Metodos para gestionar productos
     // Crear
-    public void registrarProducto(int id_stock, String nombre, double precio, int cantidad_disponible ) {
+    public void registrarProducto(int id_stock, String nombre, double precio, int cantidad_disponible) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            mostrarAlerta("Advertencia", "El nombre del producto no puede estar vacío.", Alert.AlertType.WARNING);
+            return;
+        }
+
         try {
             dao.registrarProducto(new Producto(id_stock, nombre, precio, cantidad_disponible));
-            JOptionPane.showMessageDialog(null, " Producto registrado correctamente.");            
+            mostrarAlerta("Éxito", "Producto registrado correctamente.", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al registrar: " + e.getMessage());
+            mostrarAlerta("Error", "Error al registrar: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     // Actualizar
-    public void actualizarProducto(int id_stock, String nombre, double precio, int cantidad_disponible) {
+    public void actualizarProducto(int id_producto, int id_stock, String nombre, double precio, int cantidad_disponible) {
         try {
-            dao.actualizarProducto(new Producto(id_stock, nombre, precio, cantidad_disponible));
-            JOptionPane.showInternalMessageDialog(null, " Producto actualizado correctamente.");
+            dao.actualizarProducto(new Producto(id_producto, id_stock, nombre, precio, cantidad_disponible));
+            mostrarAlerta("Éxito", "Producto actualizado correctamente.", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
-            JOptionPane.showInternalMessageDialog(null, " Error al actualizar: " + e.getMessage());
+            mostrarAlerta("Error", "Error al actualizar: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -40,9 +45,9 @@ public class ProductoControlador {
     public void eliminarProducto(int id) {
         try {
             dao.eliminarProducto(id);
-            JOptionPane.showMessageDialog(null, " Producto eliminado.");
+            mostrarAlerta("Éxito", "Producto eliminado correctamente.", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al eliminar: " + e.getMessage());
+            mostrarAlerta("Error", "Error al eliminar: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -51,18 +56,33 @@ public class ProductoControlador {
         try {
             return dao.listarProductos();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al listar: " + e.getMessage());
+            mostrarAlerta("Error", "Error al listar: " + e.getMessage(), Alert.AlertType.ERROR);
             return null;
         }
     }
 
     // Buscar
-    public void BuscarProductoPorId(int id) {
+    public Producto buscarProductoPorId(int id) {
         try {
-            dao.buscarPorId(id);
-            JOptionPane.showMessageDialog(null, " Producto encontrado exitozamente.");
+            Producto producto = dao.buscarPorId(id);
+            if (producto != null) {
+                mostrarAlerta("Éxito", "Producto encontrado exitosamente.", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Aviso", "No se encontró el producto con ID " + id, Alert.AlertType.WARNING);
+            }
+            return producto;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null," Error al buscar: " + e.getMessage());
+            mostrarAlerta("Error", "Error al buscar: " + e.getMessage(), Alert.AlertType.ERROR);
+            return null;
         }
+    }
+
+    // Método auxiliar para mostrar alertas JavaFX
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

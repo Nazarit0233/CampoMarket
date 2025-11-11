@@ -29,7 +29,7 @@ public class Producto {
         this.id_stock = id_stock;
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad_disponible = 0;
+        this.cantidad_disponible = cantidad_disponible;
     }
 
     // Getters y Setters
