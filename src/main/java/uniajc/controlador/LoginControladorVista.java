@@ -80,11 +80,11 @@ public class LoginControladorVista {
 
     private void redirigirSegunRol(Rol rol, ActionEvent event) {
     var vistas = Map.of(
-        RolAdministrador.class, "/uniajc/vistas/VistaAdministrador.fxml",
-        RolCliente.class, "/uniajc/vistas/VistaCliente.fxml",
-        RolCajero.class, "/uniajc/vistas/VistaCajero.fxml",
-        RolRepartidor.class, "/uniajc/vistas/VistaRepartidor.fxml",
-        RolDespachador.class, "/uniajc/vistas/VistaDespachador.fxml"
+        RolAdministrador.class, "/vista/VistaAdministrador.fxml",
+        RolCliente.class, "/vista/VistaCliente.fxml",
+        RolCajero.class, "/vista/VistaCajero.fxml",
+        RolRepartidor.class, "/vista/VistaRepartidor.fxml",
+        RolDespachador.class, "/vista/VistaDespachador.fxml"
     );
 
     String vista = vistas.get(rol.getClass());
