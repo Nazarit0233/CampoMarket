@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="uniajc.controlador.AgregarProductoControlador" prefWidth="600" prefHeight="500">
+
+    <!-- Título superior -->
+    <top>
+        <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #2E7D32;">
+            <Label text="Agregar Nuevo Producto" style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;" />
+        </HBox>
+    </top>
+
+    <!-- Contenido central -->
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- Campo Nombre -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Nombre del producto:" prefWidth="150"/>
+                <TextField fx:id="txtNombre" promptText="Ej: Tomates frescos" prefWidth="300"/>
+            </HBox>
+
+            <!-- Campo Categoría -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Categoría:" prefWidth="150"/>
+                <ComboBox fx:id="cbCategoria" prefWidth="300" promptText="Seleccionar categoría"/>
+            </HBox>
+
+            <!-- Campo Precio -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Precio ($):" prefWidth="150"/>
+                <TextField fx:id="txtPrecio" promptText="Ej: 3500" prefWidth="300"/>
+            </HBox>
+
+            <!-- Campo Cantidad -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Cantidad disponible:" prefWidth="150"/>
+                <TextField fx:id="txtCantidad" promptText="Ej: 100" prefWidth="300"/>
+            </HBox>
+
+            <!-- Campo Descripción -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Descripción:" prefWidth="150"/>
+                <TextArea fx:id="txtDescripcion" promptText="Detalles del producto" prefWidth="300" prefHeight="80" wrapText="true"/>
+            </HBox>
+
+            <!-- Imagen del producto -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Imagen:" prefWidth="150"/>
+                <VBox spacing="8" alignment="CENTER_LEFT">
+                    <ImageView fx:id="imgProducto" fitWidth="120" fitHeight="120" preserveRatio="true"
+                               style="-fx-border-color: gray; -fx-border-width: 1;"/>
+                    <Button fx:id="btnSeleccionarImagen" text="Seleccionar imagen"/>
+                </VBox>
+            </HBox>
+
+            <!-- Botones -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="btnGuardar" text="Guardar" style="-fx-background-color: #43A047; -fx-text-fill: white;"/>
+                <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #E53935; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
