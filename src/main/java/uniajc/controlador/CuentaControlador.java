@@ -130,7 +130,7 @@ public class CuentaControlador {
         if (cmbRol != null) {
             cmbRol.getItems().clear();
             cmbRol.getItems().addAll("Administrador", "Cajero", "Cliente", "Repartidor", "Despachador");
-            cmbRol.setValue("Cliente");
+            cmbRol.setValue("Administrador");
         }
 
         // Configurar acción del botón crear (si está presente en el FXML)
@@ -182,7 +182,7 @@ public class CuentaControlador {
             case "Despachador":
                 return new RolDespachador();
             default:
-                return new RolCliente();
+                return new RolAdministrador();
         }
     }
 

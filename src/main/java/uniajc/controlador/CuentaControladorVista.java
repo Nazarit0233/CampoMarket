@@ -42,11 +42,28 @@ public class CuentaControladorVista {
     public Hyperlink linkIniciarSesion;
 
     // Campos específicos (creados dinámicamente)
-    @FXML private TextField txtComprobante;
-    @FXML private TextField txtFechaNacimiento;
-    @FXML private TextField txtAreaResponsable;
-    @FXML private TextField txtTipoVehiculo;
-    @FXML private TextField txtTurnoTrabajo;
+    @FXML
+    private TextField txtComprobante;
+    @FXML
+    private TextField txtFechaNacimiento;
+    @FXML
+    private TextField txtNivelAcceso;
+    @FXML
+    private TextField txtAreaResponsable;
+    @FXML
+    private TextField txtTurnoTrabajo;
+    @FXML
+    private TextField txtTipoVehiculo;
+    @FXML
+    private TextField txtlicenciaConduccion;
+    @FXML
+    private TextField txtplacaVehiculo;
+    @FXML
+    private TextField txtcajaAsignada;
+    @FXML
+    private TextField txtformaPago;
+    @FXML
+    private TextField txttotalRecaudado;
 
     private CuentaControlador cuentaControlador;
 
@@ -86,6 +103,7 @@ public class CuentaControladorVista {
             cmbRol.getItems().addAll(new RolAdministrador(), new RolCajero(), new RolCliente(), new RolRepartidor(),
                     new RolDespachador());
             cmbRol.setConverter(new StringConverter<Rol>() {
+
                 @Override
                 public String toString(Rol rol) {
                     return rol == null ? "" : rol.getNombre();
@@ -103,10 +121,12 @@ public class CuentaControladorVista {
 
     @FXML
     private void mostrarCamposPorRol() {
-    if (boxCamposRol == null) return;
-    boxCamposRol.getChildren().clear();
-    Rol rol = cmbRol.getValue();
-    if (rol == null) return;
+        if (boxCamposRol == null)
+            return;
+        boxCamposRol.getChildren().clear();
+        Rol rol = cmbRol.getValue();
+        if (rol == null)
+            return;
 
         switch (rol.getNombre()) {
             case "Cliente":
@@ -118,28 +138,41 @@ public class CuentaControladorVista {
                 break;
 
             case "Administrador":
+                txtNivelAcceso = new TextField();
+                txtNivelAcceso.setPromptText("Nivel de acceso");
                 txtAreaResponsable = new TextField();
                 txtAreaResponsable.setPromptText("Área responsable");
-                boxCamposRol.getChildren().add(txtAreaResponsable);
+                boxCamposRol.getChildren().addAll(txtNivelAcceso, txtAreaResponsable);
                 break;
 
             case "Repartidor":
                 txtTipoVehiculo = new TextField();
                 txtTipoVehiculo.setPromptText("Tipo de vehículo");
+                txtlicenciaConduccion = new TextField();
+                txtlicenciaConduccion.setPromptText("Licencia de conducción");
+                txtplacaVehiculo = new TextField();
+                txtplacaVehiculo.setPromptText("Placa del vehiculo");
                 txtTurnoTrabajo = new TextField();
                 txtTurnoTrabajo.setPromptText("Turno de trabajo");
-                boxCamposRol.getChildren().addAll(txtTipoVehiculo, txtTurnoTrabajo);
+                boxCamposRol.getChildren().addAll(txtTipoVehiculo, txtlicenciaConduccion, txtplacaVehiculo,
+                        txtTurnoTrabajo);
                 break;
 
             case "Cajero":
                 txtTurnoTrabajo = new TextField();
                 txtTurnoTrabajo.setPromptText("Turno de trabajo");
-                boxCamposRol.getChildren().addAll(txtTurnoTrabajo);
+                txtcajaAsignada = new TextField();
+                txtcajaAsignada.setPromptText("Caja asignada");
+                txtformaPago = new TextField();
+                txtformaPago.setPromptText("Metodo de pago");
+                boxCamposRol.getChildren().addAll(txtTurnoTrabajo, txtcajaAsignada, txtformaPago);
                 break;
             case "Despachador":
+                txtAreaResponsable = new TextField();
+                txtAreaResponsable.setPromptText("Área responsable");
                 txtTurnoTrabajo = new TextField();
                 txtTurnoTrabajo.setPromptText("Turno de trabajo");
-                boxCamposRol.getChildren().add(txtTurnoTrabajo);
+                boxCamposRol.getChildren().addAll(txtAreaResponsable, txtTurnoTrabajo);
                 break;
         }
     }
@@ -177,19 +210,30 @@ public class CuentaControladorVista {
             switch (rolSeleccionado.getNombre()) {
                 case "Cliente":
                     cuenta.setComprobanteIdentidad(txtComprobante.getText().trim());
-                    cuenta.setFechaNacimiento(txtFechaNacimiento.getText().trim());
+                    cuenta.setFecha_Nacimiento(txtFechaNacimiento.getText().trim());
                     break;
                 case "Administrador":
-                    cuenta.setAreaResponsable(txtAreaResponsable.getText().trim());
+                    cuenta.setNivel_Acceso(txtNivelAcceso.getText().trim());
+                    cuenta.setArea_Responsable(txtAreaResponsable.getText().trim());
                     break;
                 case "Repartidor":
-                    cuenta.setTipoVehiculo(txtTipoVehiculo.getText().trim());
-                    cuenta.setTurnoTrabajo(txtTurnoTrabajo.getText().trim());
+                    cuenta.setTipo_Vehiculo(txtTipoVehiculo.getText().trim());
+                    cuenta.setLicencia_Conducion(txtlicenciaConduccion.getText().trim());
+                    cuenta.setPlaca_Vehiculo(txtplacaVehiculo.getText().trim());
+                    cuenta.setTurno_Trabajo(txtTurnoTrabajo.getText().trim());
                     break;
                 case "Cajero":
-                    cuenta.setTurnoTrabajo(txtTurnoTrabajo.getText().trim());
+                    cuenta.setTurno_Trabajo(txtTurnoTrabajo.getText().trim());
+                    try {
+                        cuenta.setCaja_Asignada(Integer.parseInt(txtcajaAsignada.getText().trim()));
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: la caja asignada debe ser un número.");
+                    }
+                    cuenta.setForma_Pago(txtformaPago.getText().trim());
+                    break;
                 case "Despachador":
-                    cuenta.setTurnoTrabajo(txtTurnoTrabajo.getText().trim());
+                    cuenta.setArea_Responsable(txtAreaResponsable.getText().trim());
+                    cuenta.setTurno_Trabajo(txtTurnoTrabajo.getText().trim());
                     break;
             }
 
@@ -218,7 +262,9 @@ public class CuentaControladorVista {
         txtConfirmar.clear();
 
         txtTelefono.clear();
-        if (boxCamposRol != null) boxCamposRol.getChildren().clear();
-        if (cmbRol != null) cmbRol.getSelectionModel().clearSelection();
+        if (boxCamposRol != null)
+            boxCamposRol.getChildren().clear();
+        if (cmbRol != null)
+            cmbRol.getSelectionModel().clearSelection();
     }
 }

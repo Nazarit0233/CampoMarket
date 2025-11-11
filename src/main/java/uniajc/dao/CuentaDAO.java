@@ -5,7 +5,7 @@ package uniajc.dao;
 
 // Importaciones necesarias
 import uniajc.modelo.Cuenta;
-import uniajc.Roles.Rol;
+import uniajc.Roles.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,38 +27,60 @@ public class CuentaDAO {
     // Crear con procedimientos almacenados
     public boolean registrarCuenta(Cuenta cuenta) throws SQLException {
         boolean registrado = false;
-        String sql = "{ CALL CrearCuenta(?, ?, ?, ?, ?) }";
+        String sql = "{ CALL CrearCuenta(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
         try (CallableStatement cs = conexion.prepareCall(sql)) {
-            cs.setString(1, cuenta.getRol().getNombre());
-            cs.setString(2, cuenta.getNombre());
-            cs.setString(3, cuenta.getCorreoElectronico());
-            cs.setString(4, cuenta.getContraseña());
-            cs.setString(5, cuenta.getTelefono());
+            cs.setString(1, cuenta.getNombre());
+            cs.setString(2, cuenta.getCorreo_Electronico());
+            cs.setString(3, cuenta.getContraseña());
+            cs.setString(4, cuenta.getTelefono());
+            cs.setString(5, cuenta.getRol().getNombre());
 
             // Campos específicos por rol
             switch (cuenta.getRol().getNombre()) {
                 case "Cliente":
                     cs.setString(6, cuenta.getComprobanteIdentidad());
-                    cs.setString(7, cuenta.getFechaNacimiento());
+                    if (cuenta.getFecha_Nacimiento() != null && !cuenta.getFecha_Nacimiento().isEmpty()) {
+                        cs.setDate(7, java.sql.Date.valueOf(cuenta.getFecha_Nacimiento()));
+                    } else {
+                        cs.setNull(7, Types.DATE);
+                    }
                     cs.setNull(8, Types.VARCHAR);
                     cs.setNull(9, Types.VARCHAR);
                     cs.setNull(10, Types.VARCHAR);
+                    cs.setNull(11, Types.VARCHAR);
+                    cs.setNull(12, Types.VARCHAR);
+                    cs.setNull(13, Types.VARCHAR);
+                    cs.setNull(14, Types.VARCHAR);
+                    cs.setNull(15, Types.VARCHAR);
+                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Administrador":
                     cs.setNull(6, Types.VARCHAR);
                     cs.setNull(7, Types.DATE);
-                    cs.setString(8, cuenta.getAreaResponsable());
-                    cs.setNull(9, Types.VARCHAR);
+                    cs.setString(8, cuenta.getNivel_Acceso());
+                    cs.setString(9, cuenta.getArea_Responsable());
                     cs.setNull(10, Types.VARCHAR);
+                    cs.setNull(11, Types.VARCHAR);
+                    cs.setNull(12, Types.VARCHAR);
+                    cs.setNull(13, Types.VARCHAR);
+                    cs.setNull(14, Types.VARCHAR);
+                    cs.setNull(15, Types.VARCHAR);
+                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Repartidor":
                     cs.setNull(6, Types.VARCHAR);
                     cs.setNull(7, Types.VARCHAR);
                     cs.setNull(8, Types.VARCHAR);
-                    cs.setString(9, cuenta.getTipoVehiculo());
-                    cs.setString(10, cuenta.getTurnoTrabajo());
+                    cs.setNull(9, Types.VARCHAR);
+                    cs.setString(10, cuenta.getTurno_Trabajo());
+                    cs.setString(11, cuenta.getTipo_Vehiculo());
+                    cs.setString(12, cuenta.getLicencia_Conducion());
+                    cs.setString(13, cuenta.getPlaca_Vehiculo());
+                    cs.setNull(14, Types.VARCHAR);
+                    cs.setNull(15, Types.VARCHAR);
+                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 case "Cajero":
@@ -66,15 +88,27 @@ public class CuentaDAO {
                     cs.setNull(7, Types.VARCHAR);
                     cs.setNull(8, Types.VARCHAR);
                     cs.setNull(9, Types.VARCHAR);
-                    cs.setString(10, cuenta.getTurnoTrabajo());
+                    cs.setNull(10, Types.VARCHAR);
+                    cs.setNull(11, Types.VARCHAR);
+                    cs.setNull(12, Types.VARCHAR);
+                    cs.setString(13, cuenta.getTurno_Trabajo());
+                    cs.setInt(14, cuenta.getCaja_Asignada());
+                    cs.setString(15, cuenta.getForma_Pago());
+                    cs.setDouble(16, cuenta.getTotal_Recaudado());
                     break;
 
                 case "Despachador":
                     cs.setNull(6, Types.VARCHAR);
                     cs.setNull(7, Types.VARCHAR);
                     cs.setNull(8, Types.VARCHAR);
-                    cs.setNull(9, Types.VARCHAR);
-                    cs.setString(10, cuenta.getTurnoTrabajo());
+                    cs.setString(9, cuenta.getArea_Responsable());
+                    cs.setString(10, cuenta.getTurno_Trabajo());
+                    cs.setNull(11, Types.VARCHAR);
+                    cs.setNull(12, Types.VARCHAR);
+                    cs.setNull(13, Types.VARCHAR);
+                    cs.setNull(14, Types.VARCHAR);
+                    cs.setNull(15, Types.VARCHAR);
+                    cs.setNull(16, Types.VARCHAR);
                     break;
 
                 default:
@@ -86,7 +120,13 @@ public class CuentaDAO {
             registrado = true;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al crear cuenta: " + e.getMessage());
+            if (e.getMessage().contains("Rol no válido")) {
+                JOptionPane.showMessageDialog(null, "El rol seleccionado no es válido.");
+            } else if (e.getMessage().contains("correo electrónico ya está registrado")) {
+                JOptionPane.showMessageDialog(null, "El correo ya está registrado.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al crear cuenta: " + e.getMessage());
+            }
         }
         return registrado;
     }
@@ -99,7 +139,7 @@ public class CuentaDAO {
             cs.setInt(1, cuenta.getId_Cuenta());
             cs.setString(2, cuenta.getRol().getNombre());
             cs.setString(3, cuenta.getNombre());
-            cs.setString(4, cuenta.getCorreoElectronico());
+            cs.setString(4, cuenta.getCorreo_Electronico());
             cs.setString(5, cuenta.getContraseña());
             cs.setString(6, cuenta.getTelefono());
 
@@ -179,47 +219,46 @@ public class CuentaDAO {
 
     // Login Cuenta
     public Cuenta loginCuenta(String correo, String contrasena) {
+    String sql = "{ CALL LoginCuenta(?, ?) }";
 
-        String sql = "{ CALL LoginCuenta(?, ?) }";
+    try (CallableStatement stmt = conexion.prepareCall(sql)) {
+        stmt.setString(1, correo);
+        stmt.setString(2, contrasena);
 
-        try (CallableStatement stmt = conexion.prepareCall(sql)) {
-            stmt.setString(1, correo);
-            stmt.setString(2, contrasena);
+        ResultSet rs = stmt.executeQuery();
 
-            ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            Rol rol = obtenerRolDesdeNombre(rs.getString("Rol"));
 
-            if (rs.next()) {
-                Rol rol = obtenerRolDesdeNombre(rs.getString("rol"));
-
-                return new Cuenta(
-                        rs.getInt("id_Cuenta"),
-                        rol,
-                        rs.getString("nombre"),
-                        rs.getString("correoElectronico"),
-                        rs.getString("contraseña"), // asegúrate de tener este campo si lo necesitas
-                        rs.getString("telefono"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return new Cuenta(
+                    rs.getInt("id_Cuenta"),
+                    rol,
+                    rs.getString("Nombre"),
+                    rs.getString("Correo_Electronico"),
+                    null, // nunca almacenamos la contraseña en memoria
+                    rs.getString("Telefono"));
         }
 
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+
+    return null;
+}
 
     // Método auxiliar para obtener el rol desde su nombre
     private Rol obtenerRolDesdeNombre(String nombreRol) {
         switch (nombreRol) {
-            case "Administrador":
-                return new uniajc.Roles.RolAdministrador();
-            case "Cajero":
-                return new uniajc.Roles.RolCajero();
             case "Cliente":
-                return new uniajc.Roles.RolCliente();
+                return new RolCliente();
+            case "Administrador":
+                return new RolAdministrador();
             case "Repartidor":
-                return new uniajc.Roles.RolRepartidor();
+                return new RolRepartidor();
+            case "Cajero":
+                return new RolCajero();
             case "Despachador":
-                return new uniajc.Roles.RolDespachador();
+                return new RolDespachador();
             default:
                 throw new IllegalArgumentException("Rol desconocido: " + nombreRol);
         }
