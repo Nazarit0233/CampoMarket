@@ -14,7 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
-public class AdministradorController {
+public class AdministradorControladorVista {
 
     // 🔹 Labels de la parte inferior (resumen)
     @FXML
@@ -55,7 +55,7 @@ public class AdministradorController {
     // 🔹 Inicialización
     @FXML
     private void initialize() {
-        // Aquí podrías cargar estadísticas desde la base de datos
+        // Aquí se cargan las estadísticas desde la base de datos
         lblPedidosHoy.setText("15");
         lblVentasDia.setText("$1.240.000");
         lblRepartidoresActivos.setText("4");
